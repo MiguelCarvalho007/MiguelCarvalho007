@@ -1,0 +1,40 @@
+name: Update GitHub Stats with Private Repos
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Executa diariamente ao meio-dia (UTC)
+  workflow_dispatch:      # Permite acionar manualmente
+  push:
+    branches:
+      - main
+
+jobs:
+  update_stats:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write    # Permissão para atualizar o README
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Update README with dynamic stats
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Usa o token secreto
+        run: |
+          # Atualiza a seção de estatísticas no README
+          echo "📊 Atualizado em $(date -u '+%d/%m/%Y %H:%M UTC')" >> README.md
+          
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add README.md
+          git commit -m "🔄 Atualização automática das estatísticas"
+          git push

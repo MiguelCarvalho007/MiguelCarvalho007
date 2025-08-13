@@ -28,7 +28,7 @@ def generate_svg(contributions):
     for date, count in contributions.items():
         if count > 0:
             color = COLORS[min(count-1, 3)]
-            dwg.add(dwg.rect(insert=(x, y), size=(10, 10), fill=color)
+            dwg.add(dwg.rect(insert=(x, y), size=(10, 10), fill=color))
     
     dwg.save()
 

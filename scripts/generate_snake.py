@@ -1,37 +1,38 @@
-import requests
-import svgwrite
-from datetime import datetime
+name: Generate Snake Animation
 
-# Configurações
-USERNAME = "MiguelCarvalho007"
-OUTPUT_PATH = "dist/github-contribution-grid-snake.svg"
-COLORS = ["#9be9a8", "#40c463", "#30a14e", "#216e39"]  # Cores do GitHub
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Executa diariamente ao meio-dia UTC
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
 
-def get_contributions():
-    url = f"https://api.github.com/users/{USERNAME}/events"
-    response = requests.get(url)
-    events = response.json()
-    
-    # Processa eventos (simplificado - na prática use a API de contribuições)
-    contributions = {}
-    for event in events:
-        date = event["created_at"][:10]
-        contributions[date] = contributions.get(date, 0) + 1
-    
-    return contributions
-
-def generate_svg(contributions):
-    dwg = svgwrite.Drawing(OUTPUT_PATH, profile="tiny")
-    
-    # Lógica para gerar a cobrinha baseada nas contribuições
-    # (Implementação completa depende do formato desejado)
-    for date, count in contributions.items():
-        if count > 0:
-            color = COLORS[min(count-1, 3)]
-            dwg.add(dwg.rect(insert=(x, y), size=(10, 10), fill=color))
-    
-    dwg.save()
-
-if __name__ == "__main__":
-    contrib_data = get_contributions()
-    generate_svg(contrib_data)
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          
+      - name: Install dependencies
+        run: pip install github-contribution-snake
+          
+      - name: Generate snake
+        run: |
+          mkdir -p dist
+          github-contribution-snake -u ${{ github.repository_owner }} -o dist/snake.svg
+          
+      - name: Commit and push
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add dist/
+          git commit -m "Update snake animation [skip ci]"
+          git push

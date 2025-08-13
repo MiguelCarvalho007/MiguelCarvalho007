@@ -38,6 +38,4 @@
 
 <br clear="both">
 
-<img src=".github/workflows/update_stats.yml" alt="Snake animation" />
-
 ###

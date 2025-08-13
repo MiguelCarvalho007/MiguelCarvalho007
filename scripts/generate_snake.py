@@ -16,18 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: Platane/snk@master
         with:
-          python-version: "3.10"
-          
-      - name: Install dependencies
-        run: pip install github-contribution-snake
-          
-      - name: Generate snake
-        run: |
-          mkdir -p dist
-          github-contribution-snake -u ${{ github.repository_owner }} -o dist/snake.svg
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-contribution-snake.svg
+            dist/github-contribution-snake-dark.svg?palette=github-dark
           
       - name: Commit and push
         run: |

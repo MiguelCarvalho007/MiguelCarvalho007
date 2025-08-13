@@ -39,5 +39,3 @@
 <br clear="both">
 
 ###
-
-![Snake animation](https://raw.githubusercontent.com/MiguelCarvalho007/MiguelCarvalho007/main/dist/github-contribution-snake.svg)

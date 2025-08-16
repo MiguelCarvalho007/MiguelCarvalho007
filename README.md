@@ -5,8 +5,7 @@
 <div align="center">
   <img src="https://my-repository-chi-hazel.vercel.app/api?username=MiguelCarvalho007&count_private=true&show_icons=true&theme=dracula" height="150" />
   <div align="center">
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=MiguelCarvalho007&layout=compact&theme=dracula&langs_count=5&hide_border=false&count_private=true
-" />
+    <img src="./lang-stats.svg" height="150" alt="languages graph" />
   </div>
 </div>
 

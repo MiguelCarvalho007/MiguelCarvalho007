@@ -6,7 +6,6 @@
   <img src="https://my-repository-chi-hazel.vercel.app/api?username=MiguelCarvalho007&count_private=true&show_icons=true&theme=dracula" height="150" />
   <div align="center">
     <img src="./lang-stats.svg" height="150" alt="languages graph" />
-    <img src="./repo-stats.svg" height="150" alt="repos stats" />
   </div>
 </div>
 

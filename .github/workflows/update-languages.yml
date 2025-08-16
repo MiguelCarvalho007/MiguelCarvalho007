@@ -1,19 +1,20 @@
 name: Update Language Stats
 
 on:
-  workflow_dispatch:  # permite rodar manualmente
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # opcional: roda todo dia à meia-noite
+    - cron: '0 0 * * *' # Executa diariamente à meia-noite
 
 jobs:
-  build:
+  generate-stats:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Generate language stats SVG
-        uses: anuraghazra/github-readme-stats@master
+        uses: anuraghazra/github-readme-stats@v2
         with:
           username: MiguelCarvalho007
           count_private: true

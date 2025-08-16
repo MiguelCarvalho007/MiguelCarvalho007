@@ -2,19 +2,22 @@ name: Update Languages Stats
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Executa todo dia à meia-noite
 
 jobs:
   generate-languages:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Generate Top Languages SVG
         run: |
           curl -o lang-stats.svg "https://github-readme-stats.vercel.app/api/top-langs/?username=MiguelCarvalho007&layout=compact&theme=dracula&langs_count=5&hide_border=false&count_private=true&private_token=${{ secrets.GH_TOKEN }}"
 
-      - name: Commit and push
+      - name: Commit and push updated SVG
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

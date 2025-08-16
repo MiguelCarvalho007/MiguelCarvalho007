@@ -1,0 +1,27 @@
+name: Update GitHub Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Executa todo dia à meia-noite
+  workflow_dispatch:      # Permite rodar manualmente
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate GitHub Stats images
+        run: |
+          curl -o lang-stats.svg "https://github-readme-stats.vercel.app/api/top-langs?username=MiguelCarvalho007&layout=compact&theme=dracula&langs_count=5&hide_border=false&cache_seconds=1800&private_token=${{ secrets.GH_TOKEN }}"
+          curl -o repo-stats.svg "https://github-readme-stats.vercel.app/api?username=MiguelCarvalho007&count_private=true&show_icons=true&theme=dracula&hide_border=false&cache_seconds=1800&private_token=${{ secrets.GH_TOKEN }}"
+
+      - name: Commit and push updated stats
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add lang-stats.svg repo-stats.svg
+          git commit -m "Update GitHub stats" || echo "No changes to commit"
+          git push

@@ -3,7 +3,7 @@ name: Update Language Stats
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # Executa diariamente à meia-noite
+    - cron: '0 0 * * *'  # executa todo dia à meia-noite
 
 jobs:
   generate-stats:
@@ -13,17 +13,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Generate language stats SVG
-        uses: anuraghazra/github-readme-stats@v2
-        with:
-          username: MiguelCarvalho007
-          count_private: true
-          hide_border: false
-          layout: compact
-          theme: dracula
-          output_file: lang-stats.svg
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq python3 python3-pip
+          pip3 install matplotlib
+
+      - name: Fetch repos languages
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GH_TOKEN" -s "https://api.github.com/user/repos?per_page=100" > repos.json
+          echo '{}' > languages.json
+          for repo in $(jq -r '.[].full_name' repos.json); do
+            curl -H "Authorization: token $GH_TOKEN" -s "https://api.github.com/repos/$repo/languages" > lang.json
+            jq -s '.[0] * .[1]' languages.json lang.json > tmp.json || cp lang.json tmp.json
+            mv tmp.json languages.json
+          done
+
+      - name: Generate SVG
+        run: python3 generate_lang_svg.py
 
       - name: Commit and push SVG
         run: |

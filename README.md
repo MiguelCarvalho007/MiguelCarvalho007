@@ -4,7 +4,10 @@
 
 <div align="center">
   <img src="https://my-repository-chi-hazel.vercel.app/api?username=MiguelCarvalho007&count_private=true&show_icons=true&theme=dracula" height="150" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=MiguelCarvalho007&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false&private_owner=true&cache_seconds=1800" height="150" alt="languages graph"  />
+  <div align="center">
+    <img src="./lang-stats.svg" height="150" alt="languages graph" />
+    <img src="./repo-stats.svg" height="150" alt="repos stats" />
+  </div>
 </div>
 
 ###

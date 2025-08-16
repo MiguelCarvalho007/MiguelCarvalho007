@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2025-08-16T23:55:22.959886</dc:date>
+    <dc:date>2025-08-16T23:58:38.194408</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -36,7 +36,7 @@ L 103.532628 25.2
 L 103.532628 18 
 L 10.8 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #306998"/>
+" clip-path="url(#p58285af845)" style="fill: #306998"/>
    </g>
    <g id="patch_3">
     <path d="M 103.532628 25.2 
@@ -44,7 +44,7 @@ L 217.723219 25.2
 L 217.723219 18 
 L 103.532628 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #264de4"/>
+" clip-path="url(#p58285af845)" style="fill: #264de4"/>
    </g>
    <g id="patch_4">
     <path d="M 217.723219 25.2 
@@ -52,7 +52,7 @@ L 300.550957 25.2
 L 300.550957 18 
 L 217.723219 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #e34c26"/>
+" clip-path="url(#p58285af845)" style="fill: #e34c26"/>
    </g>
    <g id="patch_5">
     <path d="M 300.550957 25.2 
@@ -60,7 +60,7 @@ L 421.2 25.2
 L 421.2 18 
 L 300.550957 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #f7df1e"/>
+" clip-path="url(#p58285af845)" style="fill: #f7df1e"/>
    </g>
    <g id="patch_6">
     <path d="M 421.2 25.2 
@@ -68,7 +68,7 @@ L 421.2 25.2
 L 421.2 18 
 L 421.2 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #003b57"/>
+" clip-path="url(#p58285af845)" style="fill: #003b57"/>
    </g>
    <g id="patch_7">
     <path d="M 421.2 25.2 
@@ -76,7 +76,7 @@ L 421.2 25.2
 L 421.2 18 
 L 421.2 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #00979d"/>
+" clip-path="url(#p58285af845)" style="fill: #00979d"/>
    </g>
    <g id="patch_8">
     <path d="M 421.2 25.2 
@@ -84,12 +84,12 @@ L 421.2 25.2
 L 421.2 18 
 L 421.2 18 
 z
-" clip-path="url(#pf09421ee35)" style="fill: #00758f"/>
+" clip-path="url(#p58285af845)" style="fill: #00758f"/>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pf09421ee35">
+  <clipPath id="p58285af845">
    <rect x="10.8" y="10.8" width="410.4" height="14.4"/>
   </clipPath>
  </defs>

@@ -3,7 +3,7 @@ name: Update Language Stats
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # executa todo dia à meia-noite
+    - cron: '0 0 * * *'  # Executa diariamente à meia-noite
 
 jobs:
   generate-stats:
@@ -31,13 +31,13 @@ jobs:
             mv tmp.json languages.json
           done
 
-      - name: Generate SVG
+      - name: Generate SVGs
         run: python3 generate_lang_svg.py
 
-      - name: Commit and push SVG
+      - name: Commit and push SVGs
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add lang-stats.svg
+          git add lang-bar.svg lang-legend.svg
           git commit -m "Update language stats" || echo "No changes to commit"
           git push

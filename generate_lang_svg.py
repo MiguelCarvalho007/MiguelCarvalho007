@@ -18,26 +18,29 @@ colors = {
 with open("languages.json") as f:
     data = json.load(f)
 
+# Garantir que todas as linguagens estão presentes
+data_complete = {lang: data.get(lang, 0) for lang in langs}
+
 # Calcula total e porcentagens
-total = sum(data.get(lang, 0) for lang in langs)
-percentages = [data.get(lang, 0)/total*100 if total > 0 else 0 for lang in langs]
+total = sum(data_complete.values())
+percentages = [data_complete[lang]/total*100 if total > 0 else 0 for lang in langs]
 
 # --- Cria figura única ---
-fig, ax = plt.subplots(figsize=(8, 2.2), facecolor='none')
+fig, ax = plt.subplots(figsize=(8, 2.5), facecolor='none')
 ax.axis('off')
 
 # Barra empilhada (mais fina)
 start = 0
 for i, lang in enumerate(langs):
-    ax.barh(1.6, percentages[i], left=start, color=colors[lang], height=0.2)
+    ax.barh(1.8, percentages[i], left=start, color=colors[lang], height=0.2)
     start += percentages[i]
 
 # Legenda abaixo
 y_start = 1.0
-y_step = 0.35  # espaçamento vertical
-circle_radius = 0.07
+y_step = 0.35
+circle_radius = 0.12  # aumenta o tamanho das bolinhas
 fontsize = 12
-text_margin = 0.12  # margem à esquerda do texto
+text_margin = 0.12
 
 for i, lang in enumerate(langs):
     # círculo colorido
@@ -50,7 +53,7 @@ for i, lang in enumerate(langs):
 
 # Ajustes da figura
 ax.set_xlim(0, 100)
-ax.set_ylim(0, 2.2)
+ax.set_ylim(0, 2.5)
 plt.tight_layout()
 plt.savefig("lang-stats.svg", format="svg", transparent=True)
 plt.close()

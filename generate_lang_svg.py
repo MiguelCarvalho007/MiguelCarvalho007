@@ -34,17 +34,18 @@ for i, lang in enumerate(langs):
 
 # Legenda abaixo
 y_start = 1.0
-y_step = 0.35  # aumenta espaçamento
+y_step = 0.35  # espaçamento vertical
 circle_radius = 0.07
-fontsize = 12  # aumenta fonte
-text_offset = 0.12  # distância à direita do círculo
+fontsize = 12
+text_margin = 0.12  # margem à esquerda do texto
 
 for i, lang in enumerate(langs):
-    # círculo colorido alinhado corretamente
+    # círculo colorido
     circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
     ax.add_patch(circle)
-    # texto com nome e porcentagem em branco, com margem
-    ax.text(0.1 + text_offset, y_start - i*y_step, f"{lang} {percentages[i]:.1f}%", 
+    # texto com margem à esquerda do círculo
+    ax.text(0.1 + circle_radius + text_margin, y_start - i*y_step, 
+            f"{lang} {percentages[i]:.1f}%", 
             va='center', fontsize=fontsize, weight='bold', color='white')
 
 # Ajustes da figura

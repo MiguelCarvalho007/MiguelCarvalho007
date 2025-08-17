@@ -5,9 +5,7 @@
 <div align="center">
   <img src="https://my-repository-chi-hazel.vercel.app/api?username=MiguelCarvalho007&count_private=true&show_icons=true&theme=dracula" height="150" />
   <div align="center">
-  <img src="./lang-bar.svg" width="600" alt="Languages Usage Bar"/>
-  <br/>
-  <img src="./lang-legend.svg" width="600" alt="Languages Legend"/>
+  <img src="./lang-stats.svg" width="700" alt="Languages Usage"/>
 </div>
 
 </div>

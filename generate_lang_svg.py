@@ -2,8 +2,8 @@ import json
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
-# Linguagens e cores
-langs = ["Python", "CSS", "HTML", "JavaScript", "SQLite", "Arduino", "MySQL"]
+# Linguagens e cores (mantendo suas linguagens originais)
+langs = ["Python", "HTML", "CSS", "JavaScript", "Arduino", "SQLite", "MySQL"]
 colors = {
     "Python": "#306998",
     "CSS": "#264de4",
@@ -14,44 +14,59 @@ colors = {
     "MySQL": "#00758F"
 }
 
-# Carrega dados
+# Carrega dados do JSON
 with open("languages.json") as f:
     data = json.load(f)
 
 # Garantir que todas as linguagens estão presentes
 data_complete = {lang: data.get(lang, 0) for lang in langs}
 
-# Calcula total e porcentagens
+# Calcula total e porcentagens (com 2 casas decimais como na imagem)
 total = sum(data_complete.values())
-percentages = [data_complete[lang]/total*100 if total > 0 else 0 for lang in langs]
+percentages = {lang: round(data_complete[lang]/total*100, 2) if total > 0 else 0 for lang in langs}
 
-# --- Cria figura única ---
-fig, ax = plt.subplots(figsize=(8, 2.5), facecolor='none')
+# --- Cria figura ---
+fig, ax = plt.subplots(figsize=(10, 3), facecolor='none')
 ax.axis('off')
 
-# Barra empilhada (mais fina)
+# --- Barra superior (mais grossa como na imagem) ---
 start = 0
-for i, lang in enumerate(langs):
-    ax.barh(1.8, percentages[i], left=start, color=colors[lang], height=0.2)
-    start += percentages[i]
+for lang in langs:
+    ax.barh(2.0, percentages[lang], left=start, color=colors[lang], height=0.4)
+    start += percentages[lang]
 
-# Legenda abaixo
-y_start = 1.0
-y_step = 0.35
-circle_radius = 0.12  # aumenta o tamanho das bolinhas
-fontsize = 12
-text_margin = 0.12
+# --- Legenda com círculos ---
+y_start = 1.0  # Posição inicial mais baixa
+y_step = 0.45  # Espaçamento entre linhas
+circle_radius = 0.15
+text_margin = 0.2  # Espaçamento entre círculo e texto
+fontsize = 11
 
-for i, lang in enumerate(langs):
-    # círculo colorido
-    circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
+# Ordena pelas porcentagens (como na imagem)
+sorted_langs = sorted(langs, key=lambda x: -percentages[x])
+
+for i, lang in enumerate(sorted_langs):
+    if percentages[lang] == 0:  # Pula linguagens com 0%
+        continue
+    
+    # Círculo colorido com borda branca
+    circle = Circle((0.1, y_start - i*y_step), 
+                   circle_radius, 
+                   color=colors[lang],
+                   ec='white',
+                   lw=1)
     ax.add_patch(circle)
-    # texto com margem à esquerda do círculo
-    ax.text(0.1 + circle_radius + text_margin, y_start - i*y_step, 
-            f"{lang} {percentages[i]:.1f}%", 
-            va='center', fontsize=fontsize, weight='bold', color='white')
+    
+    # Texto formatado exatamente como na imagem (sem espaço após nome)
+    ax.text(0.1 + circle_radius + text_margin, 
+            y_start - i*y_step, 
+            f"{lang}{percentages[lang]:.2f}%", 
+            va='center', 
+            fontsize=fontsize, 
+            weight='bold', 
+            color='white')
 
-# Ajustes da figura
+# Ajustes finais
 ax.set_xlim(0, 100)
 ax.set_ylim(0, 2.5)
 plt.tight_layout()

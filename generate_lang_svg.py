@@ -37,14 +37,15 @@ y_start = 1.0
 y_step = 0.35  # aumenta espaçamento
 circle_radius = 0.07
 fontsize = 12  # aumenta fonte
+text_offset = 0.12  # distância à direita do círculo
 
 for i, lang in enumerate(langs):
     # círculo colorido alinhado corretamente
     circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
     ax.add_patch(circle)
-    # texto com nome e porcentagem
-    ax.text(0.2, y_start - i*y_step, f"{lang} {percentages[i]:.1f}%", 
-            va='center', fontsize=fontsize, weight='bold')
+    # texto com nome e porcentagem em branco, com margem
+    ax.text(0.1 + text_offset, y_start - i*y_step, f"{lang} {percentages[i]:.1f}%", 
+            va='center', fontsize=fontsize, weight='bold', color='white')
 
 # Ajustes da figura
 ax.set_xlim(0, 100)

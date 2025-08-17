@@ -2,8 +2,8 @@ import json
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
-# Linguagens na ordem especificada
-langs = ["Python", "HTML", "CSS", "JavaScript", "Arduino", "SQLite", "MySQL"]
+# Linguagens e cores
+langs = ["Python", "CSS", "HTML", "JavaScript", "SQLite", "Arduino", "MySQL"]
 colors = {
     "Python": "#306998",
     "CSS": "#264de4",
@@ -14,55 +14,46 @@ colors = {
     "MySQL": "#00758F"
 }
 
-# Carrega dados (substitua pelos valores da imagem se necessário)
-data = {
-    "Python": 22.60,
-    "HTML": 20.18,
-    "CSS": 27.82,
-    "JavaScript": 29.40,
-    "Arduino": 0.00,
-    "SQLite": 0.00,
-    "MySQL": 0.00
-}
+# Carrega dados
+with open("languages.json") as f:
+    data = json.load(f)
+
+# Garantir que todas as linguagens estão presentes
+data_complete = {lang: data.get(lang, 0) for lang in langs}
+
+# Calcula total e porcentagens
+total = sum(data_complete.values())
+percentages = [data_complete[lang]/total*100 if total > 0 else 0 for lang in langs]
 
 # --- Cria figura única ---
-fig, ax = plt.subplots(figsize=(10, 4), facecolor='none')
+fig, ax = plt.subplots(figsize=(8, 2.5), facecolor='none')
 ax.axis('off')
 
-# --- Barra no topo ---
+# Barra empilhada (mais fina)
 start = 0
-for lang in langs:
-    ax.barh(3.0, data[lang], left=start, color=colors[lang], height=0.4)
-    start += data[lang]
+for i, lang in enumerate(langs):
+    ax.barh(1.8, percentages[i], left=start, color=colors[lang], height=0.2)
+    start += percentages[i]
 
-# --- Legenda com círculos ---
-y_start = 1.8  # Posição inicial mais baixa
-y_step = 0.5   # Espaçamento entre linhas
-circle_radius = 0.2
-text_margin = 0.3  # Aumentei o espaçamento entre círculo e texto
+# Legenda abaixo
+y_start = 1.0
+y_step = 0.35
+circle_radius = 0.12  # aumenta o tamanho das bolinhas
 fontsize = 12
+text_margin = 0.12
 
 for i, lang in enumerate(langs):
-    # Círculo colorido - AUMENTEI O RAIO E ADICIONEI CONTORNO BRANCO
-    circle = Circle((0.1 + circle_radius, y_start - i*y_step), 
-                  circle_radius, 
-                  color=colors[lang],
-                  ec='white',  # Borda branca
-                  lw=1.5)      # Espessura da borda
+    # círculo colorido
+    circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
     ax.add_patch(circle)
-    
-    # Texto com porcentagem - AUMENTEI O ESPAÇAMENTO (text_margin)
-    ax.text(0.1 + 2*circle_radius + text_margin, 
-            y_start - i*y_step, 
-            f"{lang} {data[lang]:.2f}%", 
-            va='center', 
-            fontsize=fontsize, 
-            weight='bold', 
-            color='white')
+    # texto com margem à esquerda do círculo
+    ax.text(0.1 + circle_radius + text_margin, y_start - i*y_step, 
+            f"{lang} {percentages[i]:.1f}%", 
+            va='center', fontsize=fontsize, weight='bold', color='white')
 
-# Ajustes finais para garantir visibilidade
+# Ajustes da figura
 ax.set_xlim(0, 100)
-ax.set_ylim(0, 3.5)
+ax.set_ylim(0, 2.5)
 plt.tight_layout()
 plt.savefig("lang-stats.svg", format="svg", transparent=True)
 plt.close()

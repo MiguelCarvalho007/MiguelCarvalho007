@@ -23,26 +23,32 @@ total = sum(data.get(lang, 0) for lang in langs)
 percentages = [data.get(lang, 0)/total*100 if total > 0 else 0 for lang in langs]
 
 # --- Cria figura única ---
-fig, ax = plt.subplots(figsize=(8, 2), facecolor='none')
+fig, ax = plt.subplots(figsize=(8, 2.2), facecolor='none')
 ax.axis('off')
 
-# Barra empilhada
+# Barra empilhada (mais fina)
 start = 0
 for i, lang in enumerate(langs):
-    ax.barh(1.5, percentages[i], left=start, color=colors[lang], height=0.3)
+    ax.barh(1.6, percentages[i], left=start, color=colors[lang], height=0.2)
     start += percentages[i]
 
 # Legenda abaixo
-y_pos = 1.0
-y_step = 0.3
+y_start = 1.0
+y_step = 0.35  # aumenta espaçamento
+circle_radius = 0.07
+fontsize = 12  # aumenta fonte
+
 for i, lang in enumerate(langs):
-    circle = Circle((0.2, y_pos - i*y_step), 0.05, color=colors[lang])
+    # círculo colorido alinhado corretamente
+    circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
     ax.add_patch(circle)
-    ax.text(0.3, y_pos - i*y_step, f"{lang} {percentages[i]:.1f}%", va='center', fontsize=10)
+    # texto com nome e porcentagem
+    ax.text(0.2, y_start - i*y_step, f"{lang} {percentages[i]:.1f}%", 
+            va='center', fontsize=fontsize, weight='bold')
 
 # Ajustes da figura
 ax.set_xlim(0, 100)
-ax.set_ylim(0, 2)
+ax.set_ylim(0, 2.2)
 plt.tight_layout()
 plt.savefig("lang-stats.svg", format="svg", transparent=True)
 plt.close()

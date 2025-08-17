@@ -38,9 +38,9 @@ for i, lang in enumerate(langs):
 # Legenda abaixo
 y_start = 1.0
 y_step = 0.35
-circle_radius = 0.12  # aumenta o tamanho das bolinhas
+circle_radius = 0.20  # aumenta o tamanho das bolinhas
 fontsize = 12
-text_margin = 0.12
+text_margin = 0.20
 
 for i, lang in enumerate(langs):
     # círculo colorido

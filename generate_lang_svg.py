@@ -14,16 +14,16 @@ colors = {
     "MySQL": "#00758F"
 }
 
-# Carrega dados
-with open("languages.json") as f:
-    data = json.load(f)
-
-# Garantir que todas as linguagens estão presentes
-data_complete = {lang: data.get(lang, 0) for lang in langs}
-
-# Calcula total e porcentagens
-total = sum(data_complete.values())
-percentages = [data_complete[lang]/total*100 if total > 0 else 0 for lang in langs]
+# Carrega dados (substitua pelos valores da imagem se necessário)
+data = {
+    "Python": 22.60,
+    "HTML": 20.18,
+    "CSS": 27.82,
+    "JavaScript": 29.40,
+    "Arduino": 0.00,
+    "SQLite": 0.00,
+    "MySQL": 0.00
+}
 
 # --- Cria figura única ---
 fig, ax = plt.subplots(figsize=(10, 4), facecolor='none')
@@ -31,28 +31,36 @@ ax.axis('off')
 
 # --- Barra no topo ---
 start = 0
-for i, lang in enumerate(langs):
-    ax.barh(3.0, percentages[i], left=start, color=colors[lang], height=0.4)
-    start += percentages[i]
+for lang in langs:
+    ax.barh(3.0, data[lang], left=start, color=colors[lang], height=0.4)
+    start += data[lang]
 
-# --- Legenda abaixo da barra ---
-y_start = 2.0
-y_step = 0.5
-circle_radius = 0.18
-text_margin = 0.15
-fontsize = 12  # Aumentei o tamanho da fonte
+# --- Legenda com círculos ---
+y_start = 1.8  # Posição inicial mais baixa
+y_step = 0.5   # Espaçamento entre linhas
+circle_radius = 0.2
+text_margin = 0.3  # Aumentei o espaçamento entre círculo e texto
+fontsize = 12
 
 for i, lang in enumerate(langs):
-    # Círculo colorido
-    circle = Circle((0.1, y_start - i*y_step), circle_radius, color=colors[lang])
+    # Círculo colorido - AUMENTEI O RAIO E ADICIONEI CONTORNO BRANCO
+    circle = Circle((0.1 + circle_radius, y_start - i*y_step), 
+                  circle_radius, 
+                  color=colors[lang],
+                  ec='white',  # Borda branca
+                  lw=1.5)      # Espessura da borda
     ax.add_patch(circle)
     
-    # Texto com porcentagem (formato com 2 casas decimais)
-    ax.text(0.1 + circle_radius + text_margin, y_start - i*y_step, 
-            f"{lang} {percentages[i]:.2f}%", 
-            va='center', fontsize=fontsize, weight='bold', color='white')
+    # Texto com porcentagem - AUMENTEI O ESPAÇAMENTO (text_margin)
+    ax.text(0.1 + 2*circle_radius + text_margin, 
+            y_start - i*y_step, 
+            f"{lang} {data[lang]:.2f}%", 
+            va='center', 
+            fontsize=fontsize, 
+            weight='bold', 
+            color='white')
 
-# Ajustes finais
+# Ajustes finais para garantir visibilidade
 ax.set_xlim(0, 100)
 ax.set_ylim(0, 3.5)
 plt.tight_layout()
